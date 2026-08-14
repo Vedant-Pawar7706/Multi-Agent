@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./voyageai.db
+      - JWT_SECRET=voyageai-super-secret-jwt-key-change-in-production-2026
+      - LLM_PROVIDER=demo
+    volumes:
+      - ./backend/voyageai.db:/app/voyageai.db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
