@@ -8,11 +8,11 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=sqlite:///./voyageai.db
-      - JWT_SECRET=voyageai-super-secret-jwt-key-change-in-production-2026
+      - DATABASE_URL=sqlite:///./mytrip.db
+      - JWT_SECRET=mytrip-super-secret-jwt-key-change-in-production-2026
       - LLM_PROVIDER=demo
     volumes:
-      - ./backend/voyageai.db:/app/voyageai.db
+      - ./backend/mytrip.db:/app/mytrip.db
 
   frontend:
     build:

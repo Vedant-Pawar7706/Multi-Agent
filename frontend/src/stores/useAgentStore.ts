@@ -143,7 +143,7 @@ export const useAgentStore = create<AgentState>((set, get) => ({
       const socket = new WebSocket(wsUrl);
 
       socket.onopen = () => {
-        get().addLog('orchestrator', 'WebSocket stream connected to VoyageAI agent pipeline.');
+        get().addLog('orchestrator', 'WebSocket stream connected to MyTrip agent pipeline.');
       };
 
       socket.onmessage = (event) => {

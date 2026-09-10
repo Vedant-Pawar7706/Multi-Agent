@@ -1,4 +1,4 @@
-# Dockerfile for VoyageAI Backend Service
+# Dockerfile for MyTrip Backend Service
 FROM python:3.12-slim
 
 WORKDIR /app

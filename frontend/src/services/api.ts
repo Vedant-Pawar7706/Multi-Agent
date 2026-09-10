@@ -2,16 +2,38 @@
 import axios from 'axios';
 import { Trip, TravelGuide, User } from '../types';
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+// Support build-time VITE_API_URL and runtime override from Settings
+export const getApiBase = (): string => {
+  if (typeof window !== 'undefined') {
+    const savedUrl = localStorage.getItem('mytrip_api_url');
+    if (savedUrl && savedUrl.trim()) {
+      const trimmed = savedUrl.trim().replace(/\/+$/, '');
+      return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+    }
+  }
+
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl && typeof envUrl === 'string' && envUrl.trim()) {
+    const trimmed = envUrl.trim().replace(/\/+$/, '');
+    return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+  }
+
+  return '/api';
+};
+
+export const API_BASE = getApiBase();
 
 export const apiClient = axios.create({
   baseURL: API_BASE,
+  timeout: 60000, // 60s to gracefully accommodate Render cold starts
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 apiClient.interceptors.request.use((config) => {
+  // Update baseURL dynamically in case user configured it in Settings
+  config.baseURL = getApiBase();
   const token = localStorage.getItem('mytrip_token') || localStorage.getItem('voyageai_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

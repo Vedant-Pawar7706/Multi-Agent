@@ -65,7 +65,7 @@
 ## 📁 Repository Structure
 
 ```
-VoyageAI/
+MyTrip/
 ├── backend/
 │   ├── app/
 │   │   ├── agents/          # Multi-agent implementations & tools
@@ -177,15 +177,15 @@ docker-compose up --build
 Configure backend settings in `backend/.env`:
 
 ```env
-PROJECT_NAME="VoyageAI Platform"
+PROJECT_NAME="MyTrip Platform"
 ENVIRONMENT="development"
 DEBUG=True
 
 # Database Configuration (SQLite default, PostgreSQL supported)
-DATABASE_URL="sqlite:///./voyageai.db"
+DATABASE_URL="sqlite:///./mytrip.db"
 
 # JWT Authentication
-JWT_SECRET="voyageai-super-secret-jwt-key-change-in-production-2026"
+JWT_SECRET="mytrip-super-secret-jwt-key-change-in-production-2026"
 JWT_ALGORITHM="HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES=1440
 

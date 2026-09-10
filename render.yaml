@@ -25,7 +25,7 @@ services:
       - key: OPENAI_API_KEY
         sync: false
       - key: DATABASE_URL
-        value: sqlite:///./voyageai.db
+        value: sqlite:///./mytrip.db
 
   # -----------------------------------------------------------
   # 2. React (Vite) Frontend Static Site

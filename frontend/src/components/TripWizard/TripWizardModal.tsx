@@ -11,7 +11,8 @@ import {
   Sparkles, 
   ChevronRight, 
   ChevronLeft,
-  Check
+  Check,
+  AlertCircle
 } from 'lucide-react';
 import { useUIStore } from '../../stores/useUIStore';
 import { useTripStore } from '../../stores/useTripStore';
@@ -54,6 +55,8 @@ export const TripWizardModal: React.FC = () => {
   const [foodPref, setFoodPref] = useState('Local & Authentic');
   const [pacing, setPacing] = useState('Balanced');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submittingStatus, setSubmittingStatus] = useState<string>('Start AI Planning');
 
   if (!isWizardOpen) return null;
 
@@ -67,6 +70,8 @@ export const TripWizardModal: React.FC = () => {
 
   const handleStartPlanning = async () => {
     setIsSubmitting(true);
+    setSubmitError(null);
+    setSubmittingStatus('Creating Journey...');
     try {
       const newTrip = await createTrip({
         destination,
@@ -86,6 +91,7 @@ export const TripWizardModal: React.FC = () => {
         }
       });
 
+      setSubmittingStatus('Starting Agents...');
       closeWizard();
       initAgents();
       setActiveTab('agent-activity');
@@ -97,10 +103,13 @@ export const TripWizardModal: React.FC = () => {
         setActiveTab('planner');
       });
       await api.startPlanning(newTrip.id);
-    } catch {
-      // Fallback
+    } catch (err: any) {
+      console.error('Failed to create trip / connect to backend:', err);
+      const msg = err.response?.data?.detail || err.message || 'Unable to connect to backend service.';
+      setSubmitError(`Backend Connection Issue: ${msg}. If your Render backend is waking up, please wait ~30 seconds and retry.`);
     } finally {
       setIsSubmitting(false);
+      setSubmittingStatus('Start AI Planning');
     }
   };
 
@@ -413,6 +422,34 @@ export const TripWizardModal: React.FC = () => {
                     className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-200 text-xs"
                   />
                 </div>
+
+                {submitError && (
+                  <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs space-y-2.5 animate-fade-in">
+                    <div className="flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <p className="leading-relaxed">{submitError}</p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                      <button
+                        onClick={handleStartPlanning}
+                        className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] transition-colors shadow-sm"
+                      >
+                        Retry Planning
+                      </button>
+                      <button
+                        onClick={() => {
+                          closeWizard();
+                          const { loadDemoTrip } = useTripStore.getState();
+                          loadDemoTrip();
+                          setActiveTab('planner');
+                        }}
+                        className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-[11px] border border-slate-700 transition-colors"
+                      >
+                        Launch Interactive Demo Mode
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -445,10 +482,14 @@ export const TripWizardModal: React.FC = () => {
             <button
               onClick={handleStartPlanning}
               disabled={isSubmitting}
-              className="flex items-center space-x-2 py-3 px-6 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-extrabold shadow-xl shadow-indigo-500/30 transition-all active:scale-95"
+              className={`flex items-center space-x-2 py-3 px-6 rounded-xl text-white text-xs font-extrabold shadow-xl shadow-indigo-500/30 transition-all active:scale-95 ${
+                isSubmitting 
+                  ? 'bg-indigo-700 opacity-80 cursor-wait' 
+                  : 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500'
+              }`}
             >
-              <Sparkles className="w-4 h-4 animate-spin-slow" />
-              <span>{isSubmitting ? 'Initializing Agents...' : 'Start AI Planning'}</span>
+              <Sparkles className={`w-4 h-4 ${isSubmitting ? 'animate-spin' : 'animate-spin-slow'}`} />
+              <span>{isSubmitting ? submittingStatus : 'Start AI Planning'}</span>
             </button>
           )}
         </div>

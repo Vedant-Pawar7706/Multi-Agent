@@ -98,7 +98,7 @@ export const LandingPage: React.FC = () => {
       {/* Interactive Workflow Banner */}
       <div className="glass-panel p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/20 to-slate-900 border border-slate-800 space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-2">
-          <h3 className="text-xl font-extrabold text-white">How VoyageAI Agents Collaborate</h3>
+          <h3 className="text-xl font-extrabold text-white">How MyTrip Agents Collaborate</h3>
           <p className="text-xs text-slate-400">Instead of one AI doing everything, 4 specialized agents execute in sequence.</p>
         </div>
 
