@@ -21,7 +21,7 @@ def run_e2e_check():
     print(" [OK] 2. Demo Dataset API Endpoint Passed.")
 
     # 3. User Registration & Auth
-    email = f"traveler_{int(time.time())}@voyageai.app"
+    email = f"traveler_{int(time.time())}@mytrip.app"
     reg_resp = client.post(f"{BASE_URL}/auth/register", json={
         "name": "Alex Mercer",
         "email": email,

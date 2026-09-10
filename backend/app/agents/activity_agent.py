@@ -9,7 +9,7 @@ class ActivityAgent:
     Role: Expert travel itinerary planner.
     Transforms research into a human-designed, realistic daily itinerary grouped geographically with proper morning/afternoon/evening breakdowns.
     """
-    SYSTEM_PROMPT = """You are the Senior Activity & Itinerary Planner Agent for VoyageAI.
+    SYSTEM_PROMPT = """You are the Senior Activity & Itinerary Planner Agent for MyTrip.
 Your role is to build a human-designed, highly realistic daily travel itinerary.
 Do NOT overload days. Group geographically close attractions. Include dedicated meal breaks and rest periods.
 

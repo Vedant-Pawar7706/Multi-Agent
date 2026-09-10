@@ -9,7 +9,7 @@ from app.agents.final_agent import FinalAgent
 
 class AgentOrchestrator:
     """
-    Multi-Agent Orchestrator Pipeline for VoyageAI.
+    Multi-Agent Orchestrator Pipeline for MyTrip.
     Executes Research -> Activity -> Budget -> Final Validator sequentially with real-time status callbacks.
     Supports smart selective re-execution when natural language AI commands are issued.
     """

@@ -7,7 +7,7 @@ from reportlab.lib.units import inch
 
 class PDFGuideGenerator:
     """
-    ReportLab Professional Travel Guide PDF Exporter for VoyageAI.
+    ReportLab Professional Travel Guide PDF Exporter for MyTrip.
     Renders cover page, itinerary timelines, budget tables, packing lists, and sources.
     """
     @staticmethod
@@ -94,7 +94,7 @@ class PDFGuideGenerator:
         # 1. COVER / HEADER BANNER
         # ----------------------------------------------------
         story.append(Spacer(1, 20))
-        story.append(Paragraph(f"VoyageAI Travel Master Guide", subtitle_style))
+        story.append(Paragraph(f"MyTrip Travel Master Guide", subtitle_style))
         story.append(Paragraph(f"{dest}", title_style))
         story.append(Paragraph(f"{days} Days  •  {travelers} Travelers  •  Total Estimate: {curr} {total_cost:,.2f}", subtitle_style))
         story.append(HRFlowable(width="100%", thickness=2, color=ACCENT, spaceBefore=10, spaceAfter=20))

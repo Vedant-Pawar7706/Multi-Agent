@@ -10,7 +10,7 @@ class ResearchAgent:
     Role: Destination intelligence researcher.
     Gathers destination overview, top attractions, hidden gems, local culture, food, transport, safety, and sources.
     """
-    SYSTEM_PROMPT = """You are the Lead Research Agent for VoyageAI.
+    SYSTEM_PROMPT = """You are the Lead Research Agent for MyTrip.
 Your role is destination intelligence research.
 Analyze the destination provided by the user and produce structured research intelligence.
 

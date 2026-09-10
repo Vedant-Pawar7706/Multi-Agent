@@ -7,12 +7,14 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "MyTrip Platform"
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
+    HOST: str = "127.0.0.1"
+    PORT: int = 8000
 
     # Database
-    DATABASE_URL: str = "sqlite:///./voyageai.db"
+    DATABASE_URL: str = "sqlite:///./mytrip.db"
 
     # JWT
-    JWT_SECRET: str = "voyageai-super-secret-jwt-key-change-in-production-2026"
+    JWT_SECRET: str = "mytrip-super-secret-jwt-key-change-in-production-2026"
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
 

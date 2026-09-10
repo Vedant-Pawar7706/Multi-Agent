@@ -20,10 +20,12 @@ app = FastAPI(
 origins = settings.CORS_ORIGINS if isinstance(settings.CORS_ORIGINS, list) else [settings.CORS_ORIGINS]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Allow all for local dev & preview flexibility
+    allow_origins=origins if origins and "*" not in origins else ["*"],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Include Router Modules
