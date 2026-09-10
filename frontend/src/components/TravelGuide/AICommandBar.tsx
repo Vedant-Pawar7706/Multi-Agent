@@ -45,7 +45,7 @@ export const AICommandBar: React.FC = () => {
           type="text"
           value={command}
           onChange={(e) => setCommand(e.target.value)}
-          placeholder="Ask VoyageAI to modify trip e.g. 'Make Day 3 slower', 'Find budget hotels'..."
+          placeholder="Ask MyTrip to modify trip e.g. 'Make Day 3 slower', 'Find budget hotels'..."
           className="flex-1 px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
           disabled={isProcessing}
         />

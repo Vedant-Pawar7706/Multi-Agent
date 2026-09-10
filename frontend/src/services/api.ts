@@ -12,7 +12,7 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('voyageai_token');
+  const token = localStorage.getItem('mytrip_token') || localStorage.getItem('voyageai_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

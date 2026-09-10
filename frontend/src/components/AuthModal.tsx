@@ -38,7 +38,7 @@ export const AuthModal: React.FC = () => {
               <Sparkles className="w-4 h-4" />
             </div>
             <h3 className="text-base font-bold text-slate-100">
-              {mode === 'login' ? 'Welcome back to VoyageAI' : 'Create VoyageAI Account'}
+              {mode === 'login' ? 'Welcome back to MyTrip' : 'Create MyTrip Account'}
             </h3>
           </div>
           <button onClick={closeAuthModal} className="text-slate-400 hover:text-white">

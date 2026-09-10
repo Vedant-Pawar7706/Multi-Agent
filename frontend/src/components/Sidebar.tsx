@@ -8,19 +8,17 @@ import {
   PieChart, 
   Activity, 
   Settings, 
-  Sun, 
-  Moon, 
   ChevronLeft, 
-  ChevronRight,
-  User as UserIcon,
-  LogOut
+  ChevronRight, 
+  User as UserIcon, 
+  LogOut 
 } from 'lucide-react';
 import { useUIStore } from '../stores/useUIStore';
 import { useAuthStore } from '../stores/useAuthStore';
 import { useTripStore } from '../stores/useTripStore';
 
 export const Sidebar: React.FC = () => {
-  const { sidebarOpen, toggleSidebar, activeTab, setActiveTab, theme, toggleTheme, openWizard, openAuthModal } = useUIStore();
+  const { sidebarOpen, toggleSidebar, activeTab, setActiveTab, openWizard, openAuthModal } = useUIStore();
   const { user, isAuthenticated, logout } = useAuthStore();
   const { userTrips } = useTripStore();
 
@@ -48,7 +46,7 @@ export const Sidebar: React.FC = () => {
             </div>
             {sidebarOpen && (
               <span className="font-extrabold text-xl tracking-tight text-white flex items-center gap-1.5">
-                Voyage<span className="text-indigo-400 font-semibold">AI</span>
+                My<span className="text-indigo-400 font-semibold">Trip</span>
               </span>
             )}
           </div>
@@ -115,18 +113,8 @@ export const Sidebar: React.FC = () => {
         )}
       </div>
 
-      {/* Footer Profile & Theme Toggle */}
+      {/* Footer Profile */}
       <div className="p-3 border-t border-slate-800/80 space-y-2">
-        <button
-          onClick={toggleTheme}
-          className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors text-sm"
-        >
-          <div className="flex items-center space-x-3">
-            {theme === 'dark' ? <Moon className="w-5 h-5 text-indigo-400" /> : <Sun className="w-5 h-5 text-amber-400" />}
-            {sidebarOpen && <span>{theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</span>}
-          </div>
-        </button>
-
         {isAuthenticated && user ? (
           <div className="flex items-center justify-between p-2 rounded-xl bg-slate-800/40 border border-slate-800">
             <div className="flex items-center space-x-3 overflow-hidden">

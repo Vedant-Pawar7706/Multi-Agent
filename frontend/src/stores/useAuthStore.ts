@@ -14,10 +14,18 @@ interface AuthState {
   checkAuth: () => Promise<void>;
 }
 
+const getStoredToken = () => {
+  try {
+    return localStorage.getItem('mytrip_token') || localStorage.getItem('voyageai_token');
+  } catch {
+    return null;
+  }
+};
+
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  token: localStorage.getItem('voyageai_token'),
-  isAuthenticated: !!localStorage.getItem('voyageai_token'),
+  token: getStoredToken(),
+  isAuthenticated: !!getStoredToken(),
   isLoading: false,
   error: null,
 
@@ -25,7 +33,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ isLoading: true, error: null });
     try {
       const res = await api.login({ email, password });
-      localStorage.setItem('voyageai_token', res.access_token);
+      localStorage.setItem('mytrip_token', res.access_token);
       set({ user: res.user, token: res.access_token, isAuthenticated: true, isLoading: false });
     } catch (err: any) {
       set({ error: err.response?.data?.detail || 'Login failed', isLoading: false });
@@ -37,7 +45,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ isLoading: true, error: null });
     try {
       const res = await api.register({ name, email, password });
-      localStorage.setItem('voyageai_token', res.access_token);
+      localStorage.setItem('mytrip_token', res.access_token);
       set({ user: res.user, token: res.access_token, isAuthenticated: true, isLoading: false });
     } catch (err: any) {
       set({ error: err.response?.data?.detail || 'Registration failed', isLoading: false });
@@ -46,17 +54,19 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: () => {
+    localStorage.removeItem('mytrip_token');
     localStorage.removeItem('voyageai_token');
     set({ user: null, token: null, isAuthenticated: false });
   },
 
   checkAuth: async () => {
-    const token = localStorage.getItem('voyageai_token');
+    const token = getStoredToken();
     if (!token) return;
     try {
       const user = await api.getMe();
       set({ user, isAuthenticated: true });
     } catch {
+      localStorage.removeItem('mytrip_token');
       localStorage.removeItem('voyageai_token');
       set({ user: null, token: null, isAuthenticated: false });
     }

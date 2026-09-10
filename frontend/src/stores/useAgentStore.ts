@@ -124,8 +124,17 @@ export const useAgentStore = create<AgentState>((set, get) => ({
   connectWebSocket: (tripId: string, onComplete: () => void) => {
     get().disconnectWebSocket();
 
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.host}/api/trips/${tripId}/ws`;
+    const apiBase = import.meta.env.VITE_API_URL || '';
+    let wsUrl: string;
+    if (apiBase.startsWith('http://') || apiBase.startsWith('https://')) {
+      const url = new URL(apiBase, window.location.origin);
+      const wsProtocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+      const cleanPath = url.pathname.replace(/\/+$/, '');
+      wsUrl = `${wsProtocol}//${url.host}${cleanPath}/trips/${tripId}/ws`;
+    } else {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      wsUrl = `${protocol}//${window.location.host}/api/trips/${tripId}/ws`;
+    }
     
     // Always start polling fallback as resilient backup
     get().startPollingFallback(tripId, onComplete);

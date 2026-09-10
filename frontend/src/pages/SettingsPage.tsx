@@ -1,10 +1,7 @@
 import React from 'react';
-import { Settings, Cpu, Shield, Database, Moon, Sun, CheckCircle2 } from 'lucide-react';
-import { useUIStore } from '../stores/useUIStore';
+import { Settings, Cpu, Database } from 'lucide-react';
 
 export const SettingsPage: React.FC = () => {
-  const { theme, toggleTheme } = useUIStore();
-
   return (
     <div className="space-y-6 max-w-4xl mx-auto p-6">
       <div>
@@ -12,7 +9,7 @@ export const SettingsPage: React.FC = () => {
           <Settings className="w-6 h-6 text-indigo-400" />
           System Settings & AI Configuration
         </h1>
-        <p className="text-xs text-slate-400 mt-1">Configure multi-agent pipeline parameters and platform theme.</p>
+        <p className="text-xs text-slate-400 mt-1">Configure multi-agent pipeline parameters and platform settings.</p>
       </div>
 
       <div className="glass-panel p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-6">
@@ -52,20 +49,6 @@ export const SettingsPage: React.FC = () => {
             </div>
             <span className="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 font-bold text-[10px]">Connected</span>
           </div>
-        </div>
-
-        {/* Theme */}
-        <div className="space-y-3 pt-4 border-t border-slate-800">
-          <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-            {theme === 'dark' ? <Moon className="w-4 h-4 text-indigo-400" /> : <Sun className="w-4 h-4 text-amber-400" />}
-            Appearance & Theme Mode
-          </h3>
-          <button
-            onClick={toggleTheme}
-            className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-colors"
-          >
-            Toggle Theme (Current: {theme.toUpperCase()})
-          </button>
         </div>
 
       </div>

@@ -18,7 +18,7 @@ def export_trip_pdf(trip_id: str, db: Session = Depends(get_db)):
 
     pdf_bytes = PDFGuideGenerator.generate_pdf(itinerary.content)
     
-    filename = f"VoyageAI_Travel_Guide_{trip.destination.replace(' ', '_')}.pdf"
+    filename = f"MyTrip_Travel_Guide_{trip.destination.replace(' ', '_')}.pdf"
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
